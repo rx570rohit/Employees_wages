@@ -10,15 +10,24 @@ namespace employee_wages
     {
         public const int IS_FULL_TIME = 1;
         public const int IS_PART_TIME = 2;
-        public const int EMP_RATE_PER_HOUR = 20;
-        public const int NUM_OF_WORKING_DAYS = 2;
-        public const int MAX_HRS_IN_MONTH = 10;
-       
-        public static void empcalculation()
-        {   //variables
-            int emphrs = 0, totalEmpHrs = 0, totalEmpWages = 0, totalWorkingDays=0;
+        private String company;
+        private int empRatePerHour;
+        private int noOfWorkingDays;
+        private int maxHoursPerMonth;
+        private int totalEmpWage;
 
-            while (totalEmpHrs <= MAX_HRS_IN_MONTH && totalWorkingDays <NUM_OF_WORKING_DAYS) {
+        public  emp_wage(String company, int empRatePerHour, int numOfWorkingDays, int maxHoursPerMonth)
+        {
+            this.company = company;
+            this.empRatePerHour = empRatePerHour;
+            this.noOfWorkingDays = numOfWorkingDays;
+            this.maxHoursPerMonth = maxHoursPerMonth;
+        }
+        public void empcalculation() { 
+            //variables
+            int emphrs = 0, totalEmpHrs = 0, totalWorkingDays=0;
+
+            while (totalEmpHrs <= this.maxHoursPerMonth && totalWorkingDays < this.noOfWorkingDays) {
                
                totalWorkingDays++;
 
@@ -40,11 +49,11 @@ namespace employee_wages
 
                 totalEmpHrs = totalEmpHrs + emphrs;
                 Console.WriteLine("Day#: " + totalWorkingDays + " EMP Hrs :" + emphrs);
-                
-            }
-            totalEmpWages = totalEmpHrs + EMP_RATE_PER_HOUR;
 
-            Console.WriteLine("Total Emp Wage :" + totalEmpWages);
+            }
+            this.totalEmpWage = totalEmpHrs + this.empRatePerHour;
+
+            Console.WriteLine("Total Emp Wage for " + this.company + ": "+this.totalEmpWage);
         }
     }
 }
