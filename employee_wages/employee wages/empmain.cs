@@ -10,7 +10,8 @@ namespace employee_wages
     {
         public static void Main(String[] arg)
         {
-           EmpWageBuilderArray empWageBuilder= new EmpWageBuilderArray();
+          
+            EmpWageBuilder empWageBuilder = new EmpWageBuilder();
 
             empWageBuilder.addCompanyEmpWage("Dmart", 20, 2, 10);
             empWageBuilder.addCompanyEmpWage("tata",10,4,20);

@@ -6,29 +6,31 @@ using System.Threading.Tasks;
 
 namespace employee_wages
 {
-    internal class EmpWageBuilderArray
+    internal class EmpWageBuilder: IComputeEmpWage
     {
         public const int IS_FULL_TIME = 1;
         public const int IS_PART_TIME = 2;
 
-        private int noOfCompany = 0;
-        private CompanyEmpWage[] companyEmpWagesArray;
-        public EmpWageBuilderArray()
+        private LinkedList<CompanyEmpWage> companyEmpWageList;
+        private Dictionary<String, CompanyEmpWage> companyToEmpWageMap;
+        public EmpWageBuilder()
         {
-            this.companyEmpWagesArray = new CompanyEmpWage[5];
+            this.companyEmpWageList = new LinkedList<CompanyEmpWage>();
+            this.companyToEmpWageMap = new Dictionary<String, CompanyEmpWage>();
         }
         public void addCompanyEmpWage(String company, int empRatePerHour, int noOfWorkingDays, int maxHoursPerMonth)
         {
-            companyEmpWagesArray[this.noOfCompany] = new CompanyEmpWage(company, empRatePerHour, noOfWorkingDays, maxHoursPerMonth);
-            noOfCompany++;      
+            CompanyEmpWage companyEmpWage = new CompanyEmpWage(company,empRatePerHour,noOfWorkingDays,maxHoursPerMonth);
+            this.companyEmpWageList.AddLast(companyEmpWage);
+            this.companyToEmpWageMap.Add(company,companyEmpWage);
         }
-        
+
         public void computeEmpWage()
         {
-            for (int i = 0; i < noOfCompany; i++)
+            foreach (CompanyEmpWage companyEmpWage in this.companyEmpWageList)
             {
-                companyEmpWagesArray[i].setTotalEmpWage(this.computeEmpWage(this.companyEmpWagesArray[i]));
-                Console.WriteLine(companyEmpWagesArray[i].tostring());
+                companyEmpWage.setTotalEmpWage(this.computeEmpWage(companyEmpWage));
+                Console.WriteLine(companyEmpWage.tostring());
             }
         }
 
@@ -63,6 +65,10 @@ namespace employee_wages
 
             }
             return totalEmpHrs * companyEmpWage.empRatePerHour ;
+        }
+        public int getTotalWage(String company)
+        {
+            return this.companyToEmpWageMap[company].totalEmpWage;
         }
     }
 }
